@@ -1,7 +1,7 @@
 {
   "npmScope": "fortnight",
   "affected": {
-    "defaultBase": "main"
+    "defaultBase": "master"
   },
   "cli": {
     "defaultCollection": "@nrwl/nest"
@@ -17,12 +17,7 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ],
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
         "accessToken": "MzkyYjE1OWQtYzdjMy00NGYyLWFmODQtM2RlYzRmMDgzOTAxfHJlYWQtd3JpdGU="
       }
     }
