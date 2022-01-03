@@ -51,7 +51,8 @@ jobs:
       #   run: |-
       #     echo ${{steps.auth.outputs.access_token}} | docker login -u oauth2accesstoken --password-stdin https://asia-southeast1-docker.pkg.dev
       - name: Configure Docker
-          run: gcloud auth configure-docker --quiet
+        run: |-
+          echo ${{steps.auth.outputs.access_token}} | gcloud auth configure-docker --quiet
 
       # Get the GKE credentials so we can deploy to the cluster
       - name: Set up GKE credentials
