@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:12.18-alpine as builder
 WORKDIR /app
 
 COPY package.json package-lock.json ./
@@ -6,11 +6,13 @@ COPY package.json package-lock.json ./
 RUN npm install --frozen-lockfile
 
 COPY . .
-COPY --from=deps /app/node_modules ./node_modules
+RUN ls
 
-RUN sh ./tools/docker/images/api/build.sh
+# COPY /app/node_modules ./node_modules
+# COPY --from=deps /app/node_modules ./node_modules
+
 # Build
-RUN npx nx run api:build:production --no-cache
+RUN npx nx run fortnight:build:production --no-cache
 
 COPY --from=builder /app/dist/apps/fortnight ./
 ENV PORT=3333
