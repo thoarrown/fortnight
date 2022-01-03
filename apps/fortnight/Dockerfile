@@ -14,7 +14,7 @@ RUN ls
 # Build
 RUN npx nx run fortnight:build:production --no-cache
 
-COPY --from=builder /app/dist/apps/fortnight ./
+COPY /app/dist/apps/fortnight ./
 ENV PORT=3333
 EXPOSE ${PORT}
 RUN npm install --production
