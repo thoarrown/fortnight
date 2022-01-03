@@ -1,20 +1,19 @@
 FROM node:12.18-alpine as builder
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY package.json yanr.lock ./
 
-RUN npm install --frozen-lockfile
+RUN yarn
 
 COPY . .
-RUN ls
 
 # COPY /app/node_modules ./node_modules
 # COPY --from=deps /app/node_modules ./node_modules
 
 # Build
-RUN npx nx run fortnight:build:production --no-cache
+RUN yarn nx run fortnight:build:production --no-cache
 
-COPY /app/dist/apps/fortnight ./
+COPY ./dist/apps/fortnight ./
 ENV PORT=3333
 EXPOSE ${PORT}
 RUN npm install --production
