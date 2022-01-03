@@ -64,7 +64,7 @@ jobs:
       # Build the Docker image
       - name: Build
         run: |-
-          docker build -f ./apps/api/Dockerfile  \
+          docker build -f ./apps/fortnight/Dockerfile  \
             --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_API:$GITHUB_SHA" \
             --build-arg GITHUB_SHA="$GITHUB_SHA" \
             --build-arg GITHUB_REF="$GITHUB_REF" \
