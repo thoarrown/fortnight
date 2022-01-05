@@ -28,11 +28,11 @@ WORKDIR /usr/src/app
 
 COPY ["package*.json", "nx.json", "./"]
 
+RUN npm install -g @nrwl/cli@13.4.3 --only=development
 RUN npm install --only=development
 
 COPY . .
 
-RUN npm install -g @nrwl/cli@13.4.3 --only=development
 RUN npm run build
 # RUN nx build --prod
 
