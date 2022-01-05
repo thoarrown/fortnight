@@ -29,11 +29,11 @@ WORKDIR /usr/src/app
 COPY ["package*.json", "nx.json", "./"]
 
 RUN npm install -g @nrwl/cli@13.4.3 --only=development
-RUN npm install --only=development
+RUN npm install --only=development --frozen-lockfile
 
 COPY . .
 
-RUN npm run build
+RUN npm run build --no-cache
 # RUN nx build --prod
 
 FROM node:14-alpine as production
