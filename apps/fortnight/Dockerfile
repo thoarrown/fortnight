@@ -14,7 +14,7 @@
 
 # COPY . .
 
-# RUN npm install -g @nrwl/cli@12.0.1
+# RUN npm install -g @nrwl/cli@13.4.3
 
 # RUN nx build --prod
 # CMD nx serve fortnight
@@ -32,6 +32,7 @@ RUN npm install --only=development
 
 COPY . .
 
+RUN npm install -g @nrwl/cli@13.4.3
 RUN npm run build
 # RUN nx build --prod
 
