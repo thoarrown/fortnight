@@ -32,6 +32,7 @@ RUN npm install -g @nrwl/cli@13.4.3 --only=development
 RUN npm install --only=development --frozen-lockfile
 
 COPY . .
+COPY --from=development /usr/src/app/node_modules ./node_modules
 
 RUN npm run build --no-cache
 # RUN nx build --prod
