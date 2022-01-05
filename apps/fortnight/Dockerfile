@@ -1,22 +1,75 @@
-FROM node:14-alpine as builder
-WORKDIR /app
+# FROM node:14-alpine As development
 
-COPY package.json yarn.lock ./
+# ENV PORT=3333
+# ENV PORT_SSR=4000
 
-RUN yarn
+# EXPOSE ${PORT}
+
+# WORKDIR /usr/src/app
+
+# COPY ["package*.json", "nx.json", "./"]
+# # COPY nx.json .
+
+# RUN npm install
+
+# COPY . .
+
+# RUN npm install -g @nrwl/cli@12.0.1
+
+# RUN nx build --prod
+# CMD nx serve fortnight
+
+# -----------------------
+FROM node:14-alpine As development
+
+WORKDIR /usr/src/app
+
+# COPY package*.json ./
+
+COPY ["package*.json", "nx.json", "./"]
+
+RUN npm install --only=development
 
 COPY . .
 
-# COPY /app/node_modules ./node_modules
-# COPY --from=deps /app/node_modules ./node_modules
+RUN npm run build
+# RUN nx build --prod
 
-# Build
-RUN yarn nx run fortnight:build:production --no-cache
+FROM node:14-alpine as production
 
-COPY ./dist/apps/fortnight ./
-ENV PORT=3333
-EXPOSE ${PORT}
-RUN npm install --production
-# dependencies that nestjs needs
-RUN npm install reflect-metadata tslib rxjs @nestjs/platform-express
-CMD node ./main.js
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install --only=production
+
+COPY . .
+
+# COPY --from=development /usr/src/app/dist ./dist/apps/fortnight
+COPY --from=development /usr/src/app/dist/apps/fortnight ./
+
+CMD ["node", "main"]
+
+# -----------------------
+# FROM node:14-alpine as builder
+# WORKDIR /app
+
+# COPY package.json yarn.lock ./
+
+# RUN yarn
+
+# COPY . .
+
+# # Build
+# RUN yarn nx run fortnight:build:production --no-cache
+
+# COPY ./dist/apps/fortnight ./
+# ENV PORT=3333
+# EXPOSE ${PORT}
+# RUN npm install --production
+# # dependencies that nestjs needs
+# RUN npm install reflect-metadata tslib rxjs @nestjs/platform-express
+# CMD node ./main.js
